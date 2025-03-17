@@ -40,12 +40,6 @@
         "default": "Ctrl+Shift+F"
       },
       "description": "Find bookmarks"
-    },
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+Period"
-      },
-      "description": "Bookmark current page"
     }
   }
 }
