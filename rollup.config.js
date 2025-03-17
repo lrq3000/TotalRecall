@@ -105,7 +105,7 @@ let plugins = [
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		!process.env.DEBUG_BUILD && production && terser()
 	]
 
 export default [

@@ -96,6 +96,12 @@ If you want to build the extension yourself, just clone it and run:
 
 The extension files will be written into the `public` directory (a new `build` subdirectory will be created inside, you can importe the `public` directory as an extension in Chrome).
 
+If there are errors during the extension's loading, you can more easily debug by disabling terse (minification) with this command:
+
+```
+DEBUG_BUILD=true npm run build
+```
+
 ## Screenshot
 
 ![Screenshot](screenshot1.png)
