@@ -10,7 +10,15 @@ const HAS_SEEN_INTRO = 'has_seen_intro'
 const RETRY_TIMEOUT = 60000 //ms
 
 
-let sync_config = JSON.parse(localStorage.getItem(SYNC_CONFIG_ITEM))
+let sync_config_promise = chrome.storage.local.get(SYNC_CONFIG_ITEM).then(items => {
+    return items[SYNC_CONFIG_ITEM] ? JSON.parse(items[SYNC_CONFIG_ITEM]) : null;
+})
+
+let sync_config = null;
+sync_config_promise.then(config => {
+    sync_config = config;
+    apply_sync_config();
+});
 
 function apply_sync_config() {
     switch (sync_config.sync_target) {
@@ -28,15 +36,16 @@ function apply_sync_config() {
     }
 }
 
-window.addEventListener('storage', function(event){
-    if (event.storageArea === localStorage) {
-        if (event.key === 'sync_config') {
-            sync_config = JSON.parse(event.newValue)
-            apply_sync_config()
-
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+    if (areaName === 'local') {
+        if (changes.sync_config) {
+            sync_config_promise.then(config => {
+                sync_config = config;
+                apply_sync_config();
+            });
         }
     }
-}, false);
+});
 
 if (sync_config) {
     apply_sync_config()
@@ -251,9 +260,10 @@ window.addEventListener("unhandledrejection", event => {
 });
 
 
-if (!window.localStorage.getItem(HAS_SEEN_INTRO)) {
-  window.localStorage.setItem(HAS_SEEN_INTRO, true);
+chrome.storage.local.get(HAS_SEEN_INTRO).then(items => {
+    if (!items[HAS_SEEN_INTRO]) {
+  chrome.storage.local.set({ [HAS_SEEN_INTRO]: true });
   chrome.tabs.create({
     url: '/intro.html'
   });
-}
+ }})

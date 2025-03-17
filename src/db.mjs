@@ -22,7 +22,7 @@ function get_couch_url(name, password, database) {
 
 const SYNC_STATUS_ITEM = 'sync_status'
 function set_sync_status(status) {
-    localStorage.setItem(SYNC_STATUS_ITEM, JSON.stringify(status))
+    chrome.storage.local.set({ [SYNC_STATUS_ITEM]: JSON.stringify(status) })
 }
 
 
