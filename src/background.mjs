@@ -255,9 +255,6 @@ browser.commands.onCommand.addListener(function(command) {
 
 });
 
-window.addEventListener("unhandledrejection", event => {
-  console.warn(`UNHANDLED PROMISE REJECTION`, event.reason, event.promise);
-});
 
 
 chrome.storage.local.get(HAS_SEEN_INTRO).then(items => {
