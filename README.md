@@ -94,7 +94,7 @@ If you want to build the extension yourself, just clone it and run:
 	npm run build
 ```
 
-The files will be written into the `public` directory.
+The extension files will be written into the `public` directory (a new `build` subdirectory will be created inside, you can importe the `public` directory as an extension in Chrome).
 
 ## Screenshot
 
