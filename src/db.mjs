@@ -70,7 +70,7 @@ class FlexWrapper {
 
     async _rebuild_flex(docs) {
 
-        this.flex = new FlexSearch.Document({
+        this.flex = new FlexSearch.Document(/** @type FlexSearch.Options */({
             // encode: "advanced",
             tokenize: "full",
             bool: "or",
@@ -92,19 +92,25 @@ class FlexWrapper {
                     "tags",
                     "starred",
                     "created",
-                    "updated",
-                ],
-                // tag: "tags"
+                    "updated"
+                ]
             }
-        });
+        }));
 
-        let tags_concat = [].concat.apply([], docs.rows.map(x => x.doc.tags))
+        let tags_concat = [].concat.apply([], docs.rows.map(x => x.doc.tags));
         this.tags = new Set(tags_concat.filter(x => x && (typeof x === 'string') && x.length > 0))     // throw away duplicates and bad values
 
-        let rows = docs.rows.filter(x => x.doc.starred)        // only index starred pages, for performance reasons
+        
+        if (!rows.length) return
         if (!rows.length) return
 
         console.log('Building search index for ' + rows.length + ' pages.')
+
+        let rows = docs.rows.filter(x => x.doc.starred)        // only index starred pages, for performance reasons
+        if (!rows.length) return
+        
+        console.log('Building search index for ' + rows.length + ' pages.')
+        
         let i = 0;
         for (let d of rows) {
             this.add_page(d.id, d.doc, false)     // Todo optimize?

@@ -161,7 +161,14 @@ export default [
 			name: 'background',
 			file: 'public/build/background.js'
 		},
-		plugins: [nodePolyfills(), ...plugins],
+		plugins: [
+			         nodePolyfills(),
+			         resolve({
+			             browser: true,
+			             dedupe: ['svelte', 'flexsearch']
+			         }),
+			         commonjs()
+			     ],
 		watch
 	},
 	{

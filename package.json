@@ -23,7 +23,7 @@
     "assert": "^2.0.0",
     "autoprefixer": "^9.8.8",
     "file-saver": "^2.0.5",
-    "flexsearch": "^0.7.21",
+    "flexsearch": "^0.8.103",
     "lodash": "^4.17.21",
     "postcss": "^8.3.11",
     "postcss-loader": "^5.3.0",
